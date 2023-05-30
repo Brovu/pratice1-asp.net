@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Các bạn nữ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<main ">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Họ Tên</th>
+                <th scope="col">Giới tính</th>
+                <th scope="col">Chuyên ngành</th>
+                <th scope="col">Tuổi</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var list in Model)
+            {
+                <tr>
+                    <td>@list.name</td>
+                    <td>@list.sex</td>
+                    <td>@list.major</td>
+                    <td>@string.Format("{0}", list.age)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>
