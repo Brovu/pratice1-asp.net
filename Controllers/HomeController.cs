@@ -11,30 +11,53 @@ namespace Practice1.Controllers
     {
         public ActionResult Index()
         {
-
-            return View(new ListFriend().InitFriend());
+            var listFriend = Friends.friends;
+            return View(listFriend);
         }
 
         public ActionResult SortAgeDesc()
         {
-
-            return View(new ListFriend().InitFriend().OrderByDescending(m => m.age).ToList());
+            var listFriend = Friends.friends;
+            return View(listFriend.OrderByDescending(m => m.age).ToList());
 
         }
 
         public ActionResult SortAgeAsc()
         {
-            return View(new ListFriend().InitFriend().OrderBy(m => m.age).ToList());
+            var listFriend = Friends.friends;
+            return View(listFriend.OrderBy(m => m.age).ToList());
         }
 
         public ActionResult SortMale()
         {
-            return View(new ListFriend().InitFriend().Where(m => m.sex == "nam").ToList());
+            var listFriend = Friends.friends;
+            return View(listFriend.Where(m => m.sex == "Nam").ToList());
         }
 
         public ActionResult SortFemale()
         {
-            return View(new ListFriend().InitFriend().Where(m => m.sex == "nữ").ToList());
+            var listFriend = Friends.friends;
+            return View(listFriend.Where(m => m.sex == "Nữ").ToList());
         }
+
+        public ActionResult SaveFriend(string name, int age, string major, string sex) 
+        {
+            Friends.friends.Add(new ListFriend()
+            {
+                name = name,
+                age = age,
+                major = major,
+                sex = sex
+            });
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult AddFriend()
+        {
+            
+            return View();
+        }
+
+
     }
 }

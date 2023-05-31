@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Thêm mới bạn bè";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+<main class="container">
+    <h2>Thêm mới bạn bè</h2>
+
+    <form action="~/Home/SaveFriend">
+        <div class="mb-3">
+            <label for="name" class="form-label">Họ Tên</label>
+            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">Tuổi</label>
+            <input type="number" class="form-control" id="age" name="age">
+        </div>
+        <div class="mb-3">
+            <label for="major" class="form-label">Chuyên ngành</label>
+            <input type="text" class="form-control" id="major" name="major">
+        </div>
+        <div class="mb-3">
+            <label for="major" class="form-label">Chọn giới tính</label><br>
+            <label><input type="radio" name="sex" value="Nam"> Nam</label>
+            <label><input type="radio" name="sex" value="Nữ"> Nữ</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</main>
+
