@@ -58,6 +58,24 @@ namespace Practice1.Controllers
             return View();
         }
 
+        public ActionResult AddFriends()
+        {
+            return View(new ListFriend());
+        }
 
+        [HttpPost]
+        public ActionResult AddFriends(ListFriend model)
+        {
+            if(ModelState.IsValid == true)
+            {
+                Friends.friends.Add(model);
+                return RedirectToAction("Index");
+
+            } else
+            {
+                ModelState.AddModelError("", "Bạn chưa nhập đủ dữ liệu");
+                return View(model);
+            }
+        }
     }
 }

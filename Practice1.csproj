@@ -182,6 +182,7 @@
     <Content Include="Views\Home\SortMale.cshtml" />
     <Content Include="Views\Home\SortFemale.cshtml" />
     <Content Include="Views\Home\AddFriend.cshtml" />
+    <Content Include="Views\Home\AddFriends.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
