@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Practice1.Models.Student>
+
+@{
+    ViewBag.Title = "Danh sách sinh viên";
+}
+
+
+<main class="container mt-5">
+    <h2>Danh sách sinh viên</h2>
+
+    <button class="btn btn-success">
+        <a href="~/Student/AddStudent" style="text-decoration: none; color: white;">Thêm mới sinh viên</a>
+    </button>
+
+    <table class="table">
+        <tr>
+            <th>
+                Mã số sinh viên
+            </th>
+            <th>
+                Họ và tên
+            </th>
+            <th>
+                Ngày tháng năm sinh
+            </th>
+            <th>
+                Khoa
+            </th>
+            <th>
+                Số điện thoại 
+            </th>
+            <th>
+                Giới tính
+            </th>
+            <th>
+                Ảnh
+            </th>
+            <th></th>
+        </tr>
+
+        @if (Model.Count() == 0)
+        {
+            <h3>Chưa có sinh viên nào được thêm</h3>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Birth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Major)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sex)
+        </td>
+        <td>
+            <img src="@item.ImagePath" alt="Hình ảnh" style="width: 100px; height: 100px" />
+        </td>
+        <td>
+            <a href="~/Student/EditStudent?idStudent=@item.ID">Edit</a> |
+            <a onclick="removeStudent(@item.ID)" href="#" style="color: red">Remove</a> |
+            <a href="~/Student/DetailStudent?idStudent=@item.ID">Detail</a> 
+        </td>
+    </tr>
+            }
+        }
+
+    </table>
+
+</main>
+
+@section JS{
+        <script>
+            const removeStudent = (idStudent) => {
+                if (confirm("Are u sure to xóa?") == true) {
+                    location.href = '/Student/RemoveStudent?idStudent=' + idStudent;
+                }
+            } 
+        </script>
+    }

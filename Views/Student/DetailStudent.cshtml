@@ -1,0 +1,79 @@
+﻿@model Practice1.Models.Student
+
+@{
+    ViewBag.Title = "Chi tiết sinh viên";
+    Layout = null;
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+<div class="container mt-2">
+    <h4>Chi tiết thông tin sinh viên</h4>
+    <hr />
+    <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="@Model.ImagePath" alt="Hình ảnh" />
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            @Html.DisplayFor(model => model.Name)
+                        </h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            @Html.DisplayFor(model => model.Birth)
+                        </li>
+                        <li class="list-group-item">
+                            @Html.DisplayFor(model => model.Major)
+                        </li>
+
+                        <li class="list-group-item">
+                            @Html.DisplayFor(model => model.PhoneNumber)
+                        </li>
+                        <li class="list-group-item">
+                            @Html.DisplayFor(model => model.Sex)
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h3>
+                    Chi tiết học phần của sinh viên có tên
+                    <u>@Html.DisplayFor(model => model.Name)</u>
+                </h3>
+                <table class="table mt-2 mb-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">Mã học phần</th>
+                            <th scope="col">Tên học phần</th>
+                            <th scope="col">Số tín chỉ</th>
+                            <th scope="col">Giảng viên</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model.Courses)
+                    {
+                         <tr>
+                             <th>@item.courseID</th>
+                             <td>@item.courseName</td>
+                             <td>@item.courseCredits</td>
+                             <td>@item.courseTeacher</td>
+                             <td>
+                                 <a href="~/Student/RemoveCourse?idStudent=@Model.ID&idCourse=@item.courseID" style="color: red">Remove</a> |
+                                 <a href="~/Student/UpdateCourse?idStudent=@Model.ID&idCourse=@item.courseID" style="color: greenyellow">Update</a> 
+                             </td>
+                         </tr>
+                    }
+                    </tbody>
+                </table>
+                <button class="btn btn-success">
+                    <a style="text-decoration: none; color: white" href="~/Student/AddCourse?idStudent=@Model.ID">Thêm học phần</a>
+                </button>
+        </div>
+    </div>
+</div>
