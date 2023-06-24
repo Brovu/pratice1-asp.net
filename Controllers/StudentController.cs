@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -11,12 +12,96 @@ namespace Practice1.Controllers
     public class StudentController : Controller
     {
         // GET: Student
-        public ActionResult List()
+        public ActionResult ListStudent()
         {
-            return View(ListStudent.listStudent);
+            return View(new ManageStudentEntities3().Students.ToList());
         }
 
+
         public ActionResult AddStudent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddStudent(Student model)
+        {
+            ManageStudentEntities3 students = new ManageStudentEntities3();
+
+            students.Students.Add(model);
+
+            students.SaveChanges();
+
+            return RedirectToAction("ListStudent");
+        }
+
+        public ActionResult EditStudent(string idStudent)
+        {
+            ManageStudentEntities3 students = new ManageStudentEntities3();
+            Student model2 = students.Students.Find(idStudent);
+
+            return View(model2);
+        }
+
+        [HttpPost]
+
+        public ActionResult EditStudent(Student model)
+        {
+            ManageStudentEntities3 students = new ManageStudentEntities3();
+            var updateModel = students.Students.Find(model.ID);
+
+            updateModel.Name = model.Name;
+            updateModel.Birth = model.Birth;
+            updateModel.Major = model.Major;
+            updateModel.PhoneNumber = model.PhoneNumber;
+            updateModel.Sex = model.Sex;
+            updateModel.idTypeStudent = model.idTypeStudent;
+
+            students.SaveChanges();
+            return RedirectToAction("ListStudent");
+        }
+
+        public ActionResult RemoveStudent(string idStudent)
+        {
+            ManageStudentEntities3 students = new ManageStudentEntities3();
+            var delModel = students.Students.Find(idStudent);
+            students.Students.Remove(delModel);
+            students.SaveChanges();
+            return RedirectToAction("ListStudent");
+        }
+
+        public ActionResult DetailStudent(string idStudent)
+        {
+            ManageStudentEntities3 students = new ManageStudentEntities3();
+            var model = students.Students.Find(idStudent);
+
+            var courses = students.Courses.Where(c => c.courseID == idStudent).ToList();
+
+            students.Courses = courses;
+            return View(model);
+        }
+
+        public ActionResult AddCourse()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddCourse(Course model, string idStudent)
+        {
+            ManageStudentEntities3 students = new ManageStudentEntities3();
+
+            var updateStudent = students.Students.Find(idStudent);
+            updateStudent.idCourse = model.courseID;
+
+            students.Courses.Add(model);
+
+            students.SaveChanges();
+            return RedirectToAction("DetailStudent", new { idStudent = idStudent });
+        }
+
+    }
+        /*public ActionResult AddStudent()
         {
             return View(new Student());
         }
@@ -38,11 +123,7 @@ namespace Practice1.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult EditStudent(string idStudent)
-        {
-            var student = ListStudent.listStudent.SingleOrDefault(m => m.ID == idStudent);
-            return View(student);
-        }
+        
 
         [HttpPost]
 
@@ -80,11 +161,11 @@ namespace Practice1.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddCourse(Course model,string idStudent)
+        public ActionResult AddCourse(Course model, string idStudent)
         {
             var updateCourse = ListStudent.listStudent.SingleOrDefault(m => m.ID == idStudent);
             updateCourse.Courses.Add(model);
-            return RedirectToAction("DetailStudent", new {idStudent = idStudent});
+            return RedirectToAction("DetailStudent", new { idStudent = idStudent });
         }
 
         public ActionResult RemoveCourse(string idStudent, string idCourse)
@@ -113,9 +194,8 @@ namespace Practice1.Controllers
             courses.courseTeacher = model.courseTeacher;
             return RedirectToAction("DetailStudent", new { idStudent = idStudent });
 
-        }
+        }*/
 
 
 
     }
-}

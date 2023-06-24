@@ -1,0 +1,96 @@
+﻿
+@model IEnumerable<Practice1.Models.Student>
+
+
+
+@{
+    ViewBag.Title = "Danh sách sinh viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container mt-4">
+    <h2>Danh sách sinh viên</h2>
+    <button class="btn btn-success">
+        <a style="text-decoration: none; color:whitesmoke" href="~/Student/AddStudent">Thêm mới sinh viên</a>
+    </button>
+
+    <table class="table">
+        <tr>
+            <th>
+                Mã số sinh viên
+            </th>
+            <th>
+                Họ và tên
+            </th>
+            <th>
+                Ngày tháng năm sinh
+            </th>
+            <th>
+                Chuyên ngành
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Giới tính
+            </th>
+            <th>
+                Học lực
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @{
+                DateTime? birthDate = item.Birth as DateTime?;
+                string formattedBirth = birthDate?.ToString("dd/MM/yyyy");
+            }
+            @formattedBirth
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Major)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sex)
+        </td>
+
+        <td>
+            @{ 
+                Practice1.Models.ManageStudentEntities3 db = new Practice1.Models.ManageStudentEntities3();
+                var type = db.TypeStudents.Find(item.idTypeStudent);
+                if(type != null)
+                {
+                    <span>@type.typeName</span>
+                } else
+                {
+                    <span>Chưa có học lực</span>
+                }
+            }
+        </td>
+        @*<td>
+            <img src="@item.ImagePath" alt="Hình ảnh" style="width: 100px; height: 100px" />
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "EditStudent", new { idStudent = item.ID }) |
+            @Html.ActionLink("Details", "DetailStudent", new { idStudent = item.ID }) |
+            @Html.ActionLink("Delete", "RemoveStudent", new { idStudent = item.ID })
+        </td>
+    </tr>
+        }
+
+    </table>
+
+</div>
